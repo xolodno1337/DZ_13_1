@@ -2,6 +2,18 @@ import pytest
 from pythonProject.src.classes import Category, Product
 
 
+def test_total_categories():
+    cat_1 = Category('Фрукты', 'Семечковые', ['Абрикос' 'Вишня' 'Яблоко' 'Слива'])
+    cat_2 = Category('Фрукты', 'Ягоды', ['Виноград', 'Клубника', 'Крыжовник'])
+    assert Category.total_categories == 2
+
+
+def test_total_products():
+    prod_1 = Product('Яблоко', 'Голден Делишес', 200.5, 10)
+    prod_2 = Product('Персик', 'Редхейвен', 700, 5)
+    assert Product.total_products == 2
+
+
 @pytest.fixture()
 def category_fruits():
     return Category('Фрукты', 'Семечковые', ['Абрикос' 'Вишня' 'Яблоко' 'Слива'])
