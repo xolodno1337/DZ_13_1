@@ -4,28 +4,28 @@ class Category:
     description: str  # Описание
     products: list  # Список товаров
     total_categories = 0  # Общее количество категорий
-    total_unique_products = set()  # Количество уникальных продуктов
+    total_unique_products = 0  # Количество уникальных продуктов
 
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
         self.__products = products
-        self.new_product_list = []   # Список в который добавляем продукты в нужном нам формате
 
+        Category.total_unique_products += len(self.__products)
         Category.total_categories += 1
 
     @property
-    def append_product(self):
+    def products(self):
         """Метод выводит список товаров."""
         result = ''
-        for product in self.new_product_list:
+        for product in self.__products:
             result += f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n'
         return result
 
-    @append_product.setter
-    def append_product(self, product):
+    @products.setter
+    def products(self, product):
         """Метод добавляет товар в список товаров."""
-        self.new_product_list.append(product)
+        self.__products.append(product)
 
 
 class Product:
@@ -50,12 +50,13 @@ class Product:
         return cls(name, description, price, quantity)
 
     @property
-    def prices(self):
+    def price(self):
         """Метод выводит стоимость."""
         return self.price
 
-    @prices.setter
-    def prices(self, new_price):
+    @price.setter
+    def price(self, new_price):
+        """Метод, который меняет цену на новую при выполнении условия."""
         if new_price <= 0:
             print('Цена введена некорректная')
         else:
@@ -63,11 +64,10 @@ class Product:
 
 
 cat_1 = Category('fruit', 'mmm', ['apple', 'cherry'])
-pr_3 = Product('ooo', 'ppp', 100, 5 )
+pr_3 = Product('ooo', 'ppp', 100, 5)
 pr_2 = Product('Pineapple', 'red', 100, 5)
-cat_1.append_product = pr_2
-print(cat_1.append_product)
+cat_1.products = pr_2
+# cat_1.products = pr_3
+print(cat_1.products)
 # pr_2.prices = 0
 # print(pr_2.prices)
-# pr_3.new_product('111', 'opopo', 500, 20)
-# print(pr_3.new_product)
