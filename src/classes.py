@@ -11,7 +11,7 @@ class Category:
         self.description = description
         self.__products = products
 
-        Category.total_unique_products += len(self.__products)
+        Category.total_unique_products = len(set(self.__products))
         Category.total_categories += 1
 
     @property
@@ -39,7 +39,7 @@ class Product:
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
 
         Product.total_products += 1
@@ -52,7 +52,7 @@ class Product:
     @property
     def price(self):
         """Метод выводит стоимость."""
-        return self.price
+        return self.__price
 
     @price.setter
     def price(self, new_price):
@@ -60,14 +60,14 @@ class Product:
         if new_price <= 0:
             print('Цена введена некорректная')
         else:
-            self.price = new_price
+            self.__price = new_price
 
 
-cat_1 = Category('fruit', 'mmm', ['apple', 'cherry'])
+cat_1 = Category('fruit', 'mmm', [])
 pr_3 = Product('ooo', 'ppp', 100, 5)
 pr_2 = Product('Pineapple', 'red', 100, 5)
 cat_1.products = pr_2
-# cat_1.products = pr_3
+cat_1.products = pr_3
 print(cat_1.products)
-# pr_2.prices = 0
-# print(pr_2.prices)
+# pr_2.price = -6
+# print(pr_2.price)
