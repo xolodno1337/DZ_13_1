@@ -1,5 +1,5 @@
 import pytest
-from pythonProject.src.classes import Category, Product
+from pythonProject.src.classes import Category, Product, Smartphone, LawnGrass
 
 
 def test_total_categories():
@@ -13,14 +13,14 @@ def test_total_categories():
 def test_total_products():
     """ Тест на общее количество продуктов. """
     Product.total_products = 0
-    prod_1 = Product('Яблоко', 'Голден Делишес', 200.5, 10)
-    prod_2 = Product('Персик', 'Редхейвен', 700, 5)
+    prod_1 = Product('Яблоко', 'Голден Делишес', 200.5, 10, 'Зеленое')
+    prod_2 = Product('Персик', 'Редхейвен', 700, 5, 'Оранжевый')
     assert Product.total_products == 2
 
 
 @pytest.fixture()
 def category_fruits():
-    return Category('Фрукты', 'Семечковые', [Product('Яблоко', 'Голден Делишес', 200.5, 10)])
+    return Category('Фрукты', 'Семечковые', [Product('Яблоко', 'Голден Делишес', 200.5, 10, 'Зеленое')])
 
 
 def test_init_category(category_fruits):
@@ -32,7 +32,7 @@ def test_init_category(category_fruits):
 
 @pytest.fixture()
 def product_apple():
-    return Product('Яблоко', 'Голден Делишес', 200.5, 10)
+    return Product('Яблоко', 'Голден Делишес', 200.5, 10, 'Зеленое')
 
 
 def test_init_product(product_apple):
@@ -41,13 +41,14 @@ def test_init_product(product_apple):
     assert product_apple.description == 'Голден Делишес'
     assert product_apple.price == 200.5
     assert product_apple.quantity == 10
+    assert product_apple.color == 'Зеленое'
 
 
 def test_len():
     """ Тест на подсчет количества продуктов на складе. """
     cat_1 = Category('Фрукты', 'Семечковые', [])
-    prod_1 = Product('Яблоко', 'Голден Делишес', 200.5, 10)
-    prod_2 = Product('Персик', 'Редхейвен', 700, 5)
+    prod_1 = Product('Яблоко', 'Голден Делишес', 200.5, 10, 'Зеленое')
+    prod_2 = Product('Персик', 'Редхейвен', 700, 5, 'Оранжевый')
     cat_1.products = prod_1
     cat_1.products = prod_2
     assert len(cat_1) == 15
@@ -55,6 +56,14 @@ def test_len():
 
 def test_add():
     """ Тест сложение продуктов. """
-    prod_1 = Product('Яблоко', 'Голден Делишес', 200.5, 10)
-    prod_2 = Product('Персик', 'Редхейвен', 700, 5)
+    prod_1 = Product('Яблоко', 'Голден Делишес', 200.5, 10, 'Зеленое')
+    prod_2 = Product('Персик', 'Редхейвен', 700, 5, 'Оранжевый')
     assert prod_1 + prod_2 == 5505
+
+
+def test_add_type():
+    """ Тест на сложение разных типов классов. """
+    prod_1 = Smartphone('Iphone', 'Pro max', 10000, 5, 'Blue', 60, '15', 512)
+    prod_2 = LawnGrass('Декоративная трава', 'Настенная', 800, 10, 'Green', 'Russia', 0)
+    with pytest.raises(TypeError):
+        prod_1 + prod_2
