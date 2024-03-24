@@ -67,3 +67,4 @@ def test_add_type():
     prod_2 = LawnGrass('Декоративная трава', 'Настенная', 800, 10, 'Green', 'Russia', 0)
     with pytest.raises(TypeError):
         prod_1 + prod_2
+
