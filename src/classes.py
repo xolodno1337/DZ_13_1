@@ -73,7 +73,7 @@ class Product:
     def __add__(self, other):
         """ Сложение продуктов из одинаковых классов, результат выполнения сложения двух продуктов равен
        сложение сумм, умноженных на количество на складе. """
-        if isinstance(other, type(self)):
+        if type(self) == type(other):
             return (self.price * self.quantity) + (other.price * other.quantity)
         raise TypeError
 
@@ -102,7 +102,7 @@ class Smartphone(Product):
     model: str  # Модель
     built_in_memory: int  # Объем встроенной памяти
 
-    def __init__(self,  name, description, price, quantity, color, efficiency, model, built_in_memory):
+    def __init__(self, name, description, price, quantity, color, efficiency, model, built_in_memory):
         super().__init__(name, description, price, quantity, color)
         self.efficiency = efficiency
         self.model = model
@@ -133,5 +133,5 @@ print(len(cat_1))
 # print(cat_1.__str__())
 # pr_2.price = -6
 # print(pr_2.price)
-pr_1 = pr_2 + pr_4
-print(pr_1)
+# pr_1 = pr_2 + pr_4
+# print(pr_1)
