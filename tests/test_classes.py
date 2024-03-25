@@ -64,7 +64,7 @@ def test_add():
 def test_add_type():
     """ Тест на сложение разных типов классов. """
     prod_1 = Smartphone('Iphone', 'Pro max', 10000, 5, 'Blue', 60, '15', 512)
-    prod_2 = LawnGrass('Декоративная трава', 'Настенная', 800, 10, 'Green', 'Russia', 0)
+    prod_2 = Product('Дыня', 'Торпеда', 800, 10, 'Желтый')
     with pytest.raises(TypeError):
         prod_1 + prod_2
 
