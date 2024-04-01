@@ -1,3 +1,6 @@
+from abc import ABC, abstractmethod
+
+
 class Category:
     """ Класс для представления категорий продуктов. """
     name: str  # Название категории
@@ -44,7 +47,23 @@ class Category:
             self.__products.append(product)
 
 
-class Product:
+class AbsProduct(ABC):
+    """ Абстрактный класс. """
+    @abstractmethod
+    def __repr__(self):
+        """ Представление класса для разработчиков. """
+        pass
+
+
+class MixinLog:
+    def __init__(self, *args, **kwargs):
+        print(repr(self))
+
+    def __repr__(self):
+        return f'{self.__class__.__name__} ({self.__dict__.items()})'
+
+
+class Product(MixinLog, AbsProduct):
     """ Класс для представления продуктов. """
     name: str  # Название
     description: str  # Описание
@@ -54,6 +73,7 @@ class Product:
     total_products = 0  # Общее количество продуктов
 
     def __init__(self, name, description, price, quantity, color):
+        super().__init__()
         self.name = name
         self.description = description
         self.__price = price
@@ -64,7 +84,8 @@ class Product:
 
     def __repr__(self):
         """ Представление класса Product для разработчиков. """
-        return f'{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})'
+        return (f'{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity}, '
+                f'{self.color})')
 
     def __str__(self):
         """ Строковое отображение класса Product. """
@@ -78,9 +99,9 @@ class Product:
         raise TypeError
 
     @classmethod
-    def new_product(cls, name, description, price, quantity):
+    def new_product(cls, name, description, price, quantity, color):
         """ Метод создает товар и возвращает объект. """
-        return cls(name, description, price, quantity)
+        return cls(name, description, price, quantity, color)
 
     @property
     def price(self):
@@ -108,6 +129,11 @@ class Smartphone(Product):
         self.model = model
         self.built_in_memory = built_in_memory
 
+    def __repr__(self):
+        """ Представление класса Smartphone для разработчиков. """
+        return (f'{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity},'
+                f' {self.color}, {self.efficiency}, {self.model}, {self.built_in_memory})')
+
 
 class LawnGrass(Product):
     """ Класс для представления травы газонной. """
@@ -119,16 +145,22 @@ class LawnGrass(Product):
         self.manufacturer_country = manufacturer_country
         self.germination_period = germination_period
 
+    def __repr__(self):
+        """ Представление класса LawnGrass для разработчиков. """
+        return (f'{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity}, '
+                f'{self.color}, {self.manufacturer_country}, {self.germination_period})')
+
 
 cat_1 = Category('fruit', 'mmm', [])
 
-pr_3 = Product('ooo', 'ppp', 100, 5, 'red')
-pr_2 = Product('Pineapple', 'red', 100, 5, 'blue')
+# pr_3 = Product('ooo', 'ppp', 100, 5, 'red')
+# pr_2 = Product('Pineapple', 'red', 100, 5, 'blue')
 pr_4 = Smartphone('iphone', 'sss', 1000, 5, 'red', 12, 'xr', 12)
-# print(pr_2.__str__())
-cat_1.products = pr_2
-cat_1.products = pr_3
-print(len(cat_1))
+
+print(pr_4.__repr__())
+# cat_1.products = pr_2
+# cat_1.products = pr_3
+# print(len(cat_1))
 # print(cat_1.products)
 # print(cat_1.__str__())
 # pr_2.price = -6
