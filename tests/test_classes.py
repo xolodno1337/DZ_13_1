@@ -1,5 +1,5 @@
 import pytest
-from pythonProject.src.classes import Category, Product, Smartphone, LawnGrass
+from pythonProject.src.classes import Category, Product, Smartphone
 
 
 def test_total_categories():
