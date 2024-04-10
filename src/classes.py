@@ -32,6 +32,13 @@ class Category:
             result += i.quantity
         return result
 
+    def middle_price(self):
+        """ Метод, который подсчитывает средний ценник всех товаров. """
+        list_price = []
+        for i in self.__products:
+            list_price.append(i.price)
+        return sum(list_price)/len(list_price)
+
     @property
     def products(self):
         """ Метод выводит список товаров. """
@@ -45,6 +52,8 @@ class Category:
         """ Метод добавляет товар в список товаров. """
         if isinstance(product, Product):
             self.__products.append(product)
+        if product.quantity == 0:
+            raise ValueError('Товар с нулевым количеством не может быть добавлен')
 
 
 class AbsProduct(ABC):
@@ -57,7 +66,7 @@ class AbsProduct(ABC):
 
 class MixinLog:
     def __init__(self, *args, **kwargs):
-        print(repr(self))
+        pass
 
     def __repr__(self):
         return f'{self.__class__.__name__} ({self.__dict__.items()})'
@@ -153,15 +162,16 @@ class LawnGrass(Product):
 
 cat_1 = Category('fruit', 'mmm', [])
 
-# pr_3 = Product('ooo', 'ppp', 100, 5, 'red')
-# pr_2 = Product('Pineapple', 'red', 100, 5, 'blue')
-pr_4 = Smartphone('iphone', 'sss', 1000, 5, 'red', 12, 'xr', 12)
-
-print(pr_4.__repr__())
-# cat_1.products = pr_2
-# cat_1.products = pr_3
+pr_3 = Product('ooo', 'ppp', 0, 10, 'red')
+pr_2 = Product('Pineapple', 'red', 0, 5, 'blue')
+# pr_4 = Smartphone('iphone', 'sss', 1000, 5, 'red', 12, 'xr', 12)
+pr_5 = Product('aaa', 'ooo', 0, 10, 'yellow')
+# print(pr_4.__repr__())
+cat_1.products = pr_2
+cat_1.products = pr_3
+cat_1.products = pr_5
 # print(len(cat_1))
-# print(cat_1.products)
+print(cat_1.middle_price())
 # print(cat_1.__str__())
 # pr_2.price = -6
 # print(pr_2.price)
