@@ -40,7 +40,7 @@ class Category:
         try:
             return sum(list_price)/len(list_price)
         except ZeroDivisionError:
-            print('В наличии нет товаров, добавьте товар')
+            return 0
 
     @property
     def products(self):
@@ -53,9 +53,9 @@ class Category:
     @products.setter
     def products(self, product):
         """ Метод добавляет товар в список товаров. """
-        if product.quantity == 0:
-            raise ValueError('Товар с нулевым количеством не может быть добавлен')
-        elif isinstance(product, Product):
+        if isinstance(product, Product):
+            if product.quantity == 0:
+                raise ValueError('Товар с нулевым количеством не может быть добавлен')
             self.__products.append(product)
 
 
